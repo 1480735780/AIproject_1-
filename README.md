@@ -1,4 +1,4 @@
-<h1 align="center">陆泓亦</h1>
+<h1 align="center">Eason</h1>
 <p align="center">
 计算机科学与技术 | 人工智能方向
 </p>
