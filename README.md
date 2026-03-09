@@ -1,116 +1,74 @@
-<h1 align="center">Eason</h1>
- 
-<br>
-深度学习与计算机视觉方向探索者
-</p>
+# 基于 PyTorch 的 0-9 + A-Z 字符验证码识别
 
----
+这是一个可直接运行的字符型验证码识别项目，支持字符集：
 
-## 🚀 当前研究项目
+- 数字：`0-9`
+- 大写字母：`A-Z`
 
-### 🔐 基于 PyTorch 的验证码识别系统
+共 36 类字符，默认识别 4 位验证码。
 
-> 一个从数据生成、标签编码到模型训练的完整深度学习工程实践项目。
+## 1. 项目结构
 
-### ✨ 项目特点
-
-- 4位数字验证码自动生成  
-- 干扰点与干扰线增强机制  
-- 参数化配置管理（config.json）  
-- 可扩展至字符型 / 文字型 / 图片型验证码  
-- CNN → CRNN 结构升级规划  
-
----
-
-## 🖼 项目示意
-
-<p align="center">
-  <img src="https://dummyimage.com/420x150/f5f5f5/333333&text=4821" width="420">
-</p>
-
----
-
-## 🛠 技术栈
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=python,pytorch,git" />
-</p>
-
----
-
-## 📊 GitHub 数据概览
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=1480735780&theme=minimal&hide_border=true">
-</p>
-
----
-
-## 📈 学习与研究方向
-
-- 卷积神经网络（CNN）
-- 序列建模（CRNN）
-- 多任务学习
-- 模型泛化能力优化
-- 深度学习工程化实践
-
----
-
-
-## 🏗 项目框架设计
-
-### 📌 整体架构
+```text
+.
+├── config.json
+├── requirements.txt
+├── src
+│   ├── charset.py
+│   ├── dataset.py
+│   ├── generate_data.py
+│   ├── model.py
+│   ├── predict.py
+│   └── train.py
+└── data/
+    ├── train/
+    └── test/
 ```
-验证码识别系统
-│
-├── 参数配置层
-│ └── 统一实验参数管理（JSON）
-│
-├── 数据构建层
-│ ├── 验证码图像生成
-│ ├── 噪声增强策略
-│ ├── 标签自动构建
-│ └── 数据集划分
-│
-└── 实验准备层
-├── 图像尺寸标准化预留
-└── 模型训练参数预设
+
+## 2. 安装依赖
+
+```bash
+pip install -r requirements.txt
 ```
+
+## 3. 生成验证码数据
+
+```bash
+python src/generate_data.py --config config.json
+```
+
+验证码文件名格式：`AB3D_12.jpg`，文件名前缀就是标签。
+
+## 4. 训练模型
+
+```bash
+python src/train.py --config config.json
+```
+
+训练完成后会保存最优模型到：
+
+- `checkpoints/captcha_alnum36.pt`
+
+## 5. 单张图片预测
+
+```bash
+python src/predict.py --config config.json --model checkpoints/captcha_alnum36.pt --image data/test/XXXX_0.jpg
+```
+
+输出即预测字符串。
+
+## 6. 可调参数
+
+在 `config.json` 中可调整：
+
+- 数据规模（`train_num`, `test_num`）
+- 验证码长度（`captcha_length`）
+- 图像尺寸与训练输入尺寸
+- batch size、学习率、epoch
+
 ---
-
-### 🎯 设计思想
-
-- 模块化拆分，便于扩展升级  
-- 数据生成与训练过程解耦  
-- 支持从固定长度验证码向序列识别过渡  
-- 为后续字符型 / 文字型 / 图片型验证码统一框架打基础  
-
----
-
-### 🚀 可扩展方向
-
-- 支持变长验证码识别  
-- 引入 CTC Loss 处理序列问题  
-- 增加更复杂干扰背景  
-- 构建统一多类型验证码识别系统  
-
----
-
-
-## 🌱 当前阶段
-
-- 构建完整验证码识别训练流程  
-- 优化模型结构与实验对比  
-- 为研究生阶段科研打下工程基础  
-
----
-
-## 📬 联系方式
-
-- 📧 1480735780@qq.com  
-
----
-
-<p align="center">
-  <i>观我旧往，同我仰春。</i>
-</p>
+如果你愿意，我还可以继续帮你加：
+1) TensorBoard 训练可视化；
+2) ONNX 导出；
+3) FastAPI 推理接口；
+4) 变长验证码（CTC/CRNN）。
